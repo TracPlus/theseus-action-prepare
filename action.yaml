@@ -1,0 +1,42 @@
+name: 'Prepare Build'
+description: 'Prepares the checkout for compilation'
+inputs:
+  solution:  # id of input
+    description: 'The solution to perform the package restore against'
+    required: true
+    default: '*.sln'
+outputs:
+  version:
+    description: "GitVersion output for the current build."
+    value: ${{ steps.gitversion.outputs.NuGetVersionV2 }}
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
+    - name: Replace variables in nuget config
+      uses: TracPlus/replace-action@master
+      with:
+        files: nuget.config
+        replacements: '@NUGET_PACKAGE_READ_TOKEN=${{ secrets.NUGET_PACKAGE_READ_TOKEN }}'
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.11
+      with:
+        versionSpec: '5.8.2'
+    - name: Restore Packages
+      run: |
+        dotnet restore ${{ inputs.solution }}
+    - name: Determine Version
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v0.9.11
+      with:
+        useConfigFile: true
+    - uses: actions/upload-artifact@master
+      with:
+        name: workspace
+        path: .
+        retention-days: 1
