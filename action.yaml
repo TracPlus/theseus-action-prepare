@@ -13,8 +13,8 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v1
-        with:
-          fetch-depth: 0
+      with:
+        fetch-depth: 0
     - name: Replace variables in nuget config
       uses: TracPlus/replace-action@master
       with:
