@@ -12,6 +12,9 @@ outputs:
   version:
     description: "GitVersion output for the current build."
     value: ${{ steps.gitversion.outputs.NuGetVersionV2 }}
+  bob:
+    description: "A cool test value."
+    value: 'Dobilina'
 runs:
   using: "composite"
   steps:
