@@ -2,9 +2,12 @@ name: 'Prepare Build'
 description: 'Prepares the checkout for compilation'
 inputs:
   solution:  # id of input
-    description: 'The solution to perform the package restore against'
+    description: 'The solution to perform the package restore against.'
     required: true
     default: '*.sln'
+  nuget-token:
+    description: 'Token to pull private packages.'
+    required: true
 outputs:
   version:
     description: "GitVersion output for the current build."
@@ -19,7 +22,7 @@ runs:
       uses: TracPlus/replace-action@master
       with:
         files: nuget.config
-        replacements: '@NUGET_PACKAGE_READ_TOKEN=${{ secrets.NUGET_PACKAGE_READ_TOKEN }}'
+        replacements: '@NUGET_PACKAGE_READ_TOKEN=${{ inputs.nuget-token }}'
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '6.0.x'
