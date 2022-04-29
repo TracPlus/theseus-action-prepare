@@ -11,7 +11,7 @@ inputs:
 outputs:
   version:
     description: "GitVersion output for the current build."
-    value: ${{ steps.export-version.outputs.version }}
+    value: ${{ steps.gitversion.outputs.NuGetVersionV2 }}
 runs:
   using: "composite"
   steps:
@@ -38,9 +38,6 @@ runs:
       uses: gittools/actions/gitversion/execute@v0.9.11
       with:
         useConfigFile: true
-    - id: export-version
-      run: echo "::set-output name=version::${{ steps.gitversion.outputs.NuGetVersionV2 }}"
-      shell: bash
     - uses: actions/upload-artifact@master
       with:
         name: workspace
