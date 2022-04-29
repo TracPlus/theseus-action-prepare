@@ -22,7 +22,7 @@ runs:
       uses: TracPlus/replace-action@master
       with:
         files: nuget.config
-        replacements: "@NUGET_PACKAGE_READ_TOKEN=${{ inputs.nuget-token }}"
+        replacements: '@NUGET_PACKAGE_READ_TOKEN=${{ inputs.solution }}'
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '6.0.x'
