@@ -22,6 +22,9 @@ runs:
       uses: gittools/actions/gitversion/setup@v0.9.15
       with:
         versionSpec: '5.8.2'
+    - name: Check dotnet installation
+      run: ls /usr/share/dotnet/sdk
+      shell: bash
     - name: Restore Packages
       run: dotnet restore ${{ inputs.solution }}
       shell: bash
