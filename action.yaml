@@ -5,6 +5,10 @@ inputs:
     description: 'The solution to perform the package restore against.'
     required: true
     default: '*.sln'
+  upload-artifact:
+    description: 'Upload a workspace artifact at the end.'
+    required: false
+    default: 'true'
 outputs:
   version:
     description: "GitVersion output for the current build."
@@ -33,6 +37,7 @@ runs:
       with:
         useConfigFile: true
     - uses: actions/upload-artifact@master
+      if: ${{ inputs.upload-artifact == 'true' }}
       with:
         name: workspace
         path: .
