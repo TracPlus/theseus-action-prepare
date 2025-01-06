@@ -24,6 +24,7 @@ runs:
         dotnet-version: |
           6.x
           8.x
+          9.x
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.15
       with:
